@@ -85,6 +85,7 @@
   </head>
   <body>
     <div id="root"></div>
-    <script type="text/babel" data-presets="react,typescript" data-type="module" src="index.tsx"></script>
+    <!-- 使用相對路徑避免路徑解析問題 -->
+    <script type="text/babel" data-presets="react,typescript" data-type="module" src="./index.tsx"></script>
   </body>
 </html>
