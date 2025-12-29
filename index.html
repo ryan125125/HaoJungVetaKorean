@@ -3,10 +3,26 @@
 <html lang="zh-TW">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Maru Trip 2025</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Maru Trip 2025 | 釜山首爾冒險指南</title>
+    
+    <!-- SEO & Social Media -->
+    <meta name="description" content="專為 Maru Trip 2025 設計的 7 天釜山與首爾旅遊行程與記帳工具。" />
+    <meta property="og:title" content="Maru Trip 2025" />
+    <meta property="og:description" content="精選雪納瑞尋寶之旅 - 釜山、首爾 7 日完整行程" />
+    <meta property="og:type" content="website" />
+    
+    <!-- PWA & Mobile Optimization -->
+    <meta name="theme-color" content="#050505" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    
+    <!-- Favicon (Dog Icon) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M10 5.172C10 3.782 8.423 2.679 6.5 3c-2.123.354-2.358 3.557-1 4.5l1.813 1.27c.3.21.437.58.344.93L6.5 13.5'/><path d='M14 5.172C14 3.782 15.577 2.679 17.5 3c2.123.354 2.358 3.557 1 4.5l-1.813 1.27c-.3.21-.437.58-.344.93L17.5 13.5'/><path d='M9 14v1a3 3 0 0 0 6 0v-1'/><path d='M17 17.914c1.49 1.047 2 2.086 2 3.086H5c0-1 0.51-2.039 2-3.086'/></svg>">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
       body {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -14,6 +30,7 @@
         margin: 0;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        overscroll-behavior-y: contain;
       }
       .no-scrollbar::-webkit-scrollbar {
         display: none;
@@ -27,20 +44,29 @@
           -webkit-appearance: none; 
           margin: 0; 
       }
+      /* 優化手機點擊高亮 */
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
     </style>
-  <script type="importmap">
+
+    <script type="importmap">
 {
   "imports": {
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3",
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "lucide-react": "https://esm.sh/lucide-react@0.460.0",
+    "framer-motion": "https://esm.sh/framer-motion@11.11.11",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "framer-motion": "https://esm.sh/framer-motion@^12.23.26"
+    "react/": "https://esm.sh/react@^19.2.3/"
   }
 }
 </script>
-</head>
+  </head>
   <body>
     <div id="root"></div>
+    <!-- 明確指定入口點 -->
+    <script type="module" src="./index.tsx"></script>
   </body>
 </html>
