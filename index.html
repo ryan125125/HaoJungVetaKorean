@@ -6,52 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Maru Trip 2025 | 釜山首爾冒險指南</title>
     
-    <!-- SEO & Social Media -->
-    <meta name="description" content="專為 Maru Trip 2025 設計的 7 天釜山與首爾旅遊行程與記帳工具。" />
-    <meta property="og:title" content="Maru Trip 2025" />
-    <meta property="og:description" content="精選雪納瑞尋寶之旅 - 釜山、首爾 7 日完整行程" />
-    <meta property="og:type" content="website" />
-    
     <!-- PWA & Mobile Optimization -->
     <meta name="theme-color" content="#050505" />
-    <!-- 修正：使用現代標準的 Meta 標籤 -->
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     
-    <!-- Favicon (Dog Icon) -->
+    <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M10 5.172C10 3.782 8.423 2.679 6.5 3c-2.123.354-2.358 3.557-1 4.5l1.813 1.27c.3.21.437.58.344.93L6.5 13.5'/><path d='M14 5.172C14 3.782 15.577 2.679 17.5 3c2.123.354 2.358 3.557 1 4.5l-1.813 1.27c-.3.21-.437.58-.344.93L17.5 13.5'/><path d='M9 14v1a3 3 0 0 0 6 0v-1'/><path d='M17 17.914c1.49 1.047 2 2.086 2 3.086H5c0-1 0.51-2.039 2-3.086'/></svg>">
 
-    <!-- Tailwind CSS (用於快速樣式呈現) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- 核心修正：加入 Babel 以在瀏覽器中直接執行 TSX (解決 GitHub Pages 的 MIME 問題) -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- 使用穩定 CDN 的 Babel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.11/babel.min.js"></script>
 
     <style>
       body {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        font-family: 'Inter', sans-serif;
         background-color: #050505;
         margin: 0;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
         overscroll-behavior-y: contain;
       }
-      .no-scrollbar::-webkit-scrollbar {
-        display: none;
-      }
-      .no-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-      }
-      input[type="number"]::-webkit-inner-spin-button, 
-      input[type="number"]::-webkit-outer-spin-button { 
-          -webkit-appearance: none; 
-          margin: 0; 
-      }
-      * {
-        -webkit-tap-highlight-color: transparent;
-      }
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      * { -webkit-tap-highlight-color: transparent; }
     </style>
 
     <script type="importmap">
@@ -70,7 +48,7 @@
   </head>
   <body>
     <div id="root"></div>
-    <!-- 修正：將腳本標籤改為 text/babel 並添加 data-type="module" 以便正確解析 TSX 且維持模組化 -->
-    <script type="text/babel" data-type="module" src="./index.tsx"></script>
+    <!-- 核心：使用單一入口並明確標註預設 presets -->
+    <script type="text/babel" data-presets="react,typescript" data-type="module" src="./index.tsx"></script>
   </body>
 </html>
