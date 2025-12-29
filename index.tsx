@@ -1,6 +1,6 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   List, Dog, Camera, Map as MapIcon, Info, Wallet, Calendar, Trash2 
@@ -114,13 +114,22 @@ const ItineraryCard = ({ item, index, expenseValue, onExpenseChange }) => {
 
 const TravelApp = () => {
   const [activeDay, setActiveDay] = useState(1);
-  // Add explicit type to state to avoid unknown inference from JSON.parse
-  const [expenses, setExpenses] = useState<Record<string, string>>(() => JSON.parse(localStorage.getItem('maru-trip-expenses') || '{}'));
+  const [expenses, setExpenses] = useState<Record<string, string>>(() => {
+    try {
+      return JSON.parse(localStorage.getItem('maru-trip-expenses') || '{}');
+    } catch (e) {
+      return {};
+    }
+  });
 
-  useEffect(() => localStorage.setItem('maru-trip-expenses', JSON.stringify(expenses)), [expenses]);
+  useEffect(() => {
+    localStorage.setItem('maru-trip-expenses', JSON.stringify(expenses));
+  }, [expenses]);
 
-  // Fix: Explicitly typed the accumulator 's' as number and value 'v' as string to resolve '+' operator error
-  const grandTotal = useMemo(() => Object.values(expenses).reduce((s: number, v: string) => s + (Number(v) || 0), 0), [expenses]);
+  const grandTotal = useMemo(() => 
+    Object.values(expenses).reduce((s: number, v: string) => s + (Number(v) || 0), 0)
+  , [expenses]);
+
   const currentDayData = ITINERARY_DATA.find(i => i.day === activeDay);
 
   return (
@@ -138,7 +147,7 @@ const TravelApp = () => {
 
         <div className="flex space-x-3 px-6 py-5 overflow-x-auto no-scrollbar">
           {ITINERARY_DATA.map(d => (
-            <button key={d.day} onClick={() => setActiveDay(d.day)} className={`flex-shrink-0 w-12 h-14 rounded-2xl flex flex-col items-center justify-center transition-all ${activeDay === d.day ? 'bg-white text-black' : 'bg-zinc-900/40 text-zinc-500'}`}>
+            <button key={d.day} onClick={() => setActiveDay(d.day)} className={`flex-shrink-0 w-12 h-14 rounded-2xl flex flex-col items-center justify-center transition-all ${activeDay === d.day ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.2)]' : 'bg-zinc-900/40 text-zinc-500 hover:bg-zinc-800/50'}`}>
               <span className="text-[10px] font-bold">D{d.day}</span>
               <span className="text-[8px] opacity-60 font-medium">DAY</span>
             </button>
@@ -149,7 +158,13 @@ const TravelApp = () => {
           <AnimatePresence mode="wait">
             <motion.div key={activeDay} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               {currentDayData?.items.map((item, idx) => (
-                <ItineraryCard key={`${activeDay}-${idx}`} item={item} index={idx} expenseValue={expenses[`day${activeDay}-${idx}`] || ''} onExpenseChange={(val) => setExpenses(prev => ({ ...prev, [`day${activeDay}-${idx}`]: val }))} />
+                <ItineraryCard 
+                  key={`${activeDay}-${idx}`} 
+                  item={item} 
+                  index={idx} 
+                  expenseValue={expenses[`day${activeDay}-${idx}`] || ''} 
+                  onExpenseChange={(val) => setExpenses(prev => ({ ...prev, [`day${activeDay}-${idx}`]: val }))} 
+                />
               ))}
             </motion.div>
           </AnimatePresence>
@@ -157,9 +172,9 @@ const TravelApp = () => {
 
         <div className="fixed bottom-0 left-0 right-0 flex justify-center pb-8 px-6 pointer-events-none z-[100]">
           <nav className="pointer-events-auto h-18 bg-[#141416]/90 backdrop-blur-2xl rounded-[2.5rem] flex items-center justify-around px-2 w-full max-w-[320px] border border-white/10 shadow-2xl">
-            <button className="p-4 text-zinc-500"><List className="w-5 h-5" /></button>
-            <div onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="w-14 h-14 bg-white rounded-full flex items-center justify-center -translate-y-8 shadow-xl border-[6px] border-[#050505] active:scale-90 transition-transform"><Dog className="w-6 h-6 text-black" /></div>
-            <button className="p-4 text-zinc-500"><Camera className="w-5 h-5" /></button>
+            <button className="p-4 text-zinc-500 active:text-white"><List className="w-5 h-5" /></button>
+            <div onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="w-14 h-14 bg-white rounded-full flex items-center justify-center -translate-y-8 shadow-xl border-[6px] border-[#050505] active:scale-95 transition-all cursor-pointer"><Dog className="w-6 h-6 text-black" /></div>
+            <button className="p-4 text-zinc-500 active:text-white"><Camera className="w-5 h-5" /></button>
           </nav>
         </div>
       </div>
@@ -167,5 +182,8 @@ const TravelApp = () => {
   );
 };
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<TravelApp />);
+const container = document.getElementById('root');
+if (container) {
+  const root = createRoot(container);
+  root.render(<TravelApp />);
+}
